@@ -8,9 +8,21 @@ pytest_plugins = "pytester"
 
 def test_run(pytester: pytest.Pytester, tmp_path: Path):
     path = pytester.makepyfile("""
-    
-    
+from playwright.sync_api import Route
+
+def replace_resp(route: Route):
+    if "http://example.com/" in route.request.url:
+        response = route.fetch()
+        body = response.text()
+        body = body.replace("Example Domain", "Goodo")
+        route.fulfill(
+            body=body
+        )
+
+addons = [
+    replace_resp
+] 
     """)
 
-    Run.run(path)
-    assert False
+    page = Run.run(path, url="http://example.com/")
+    assert "Goodo" == page.inner_text("h1")

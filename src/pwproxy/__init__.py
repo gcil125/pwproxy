@@ -14,10 +14,10 @@ def stop():
 
     async def inner():
         loop = asyncio.get_running_loop()
-        await loop.create_future()
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(inner())
+        fut = loop.create_future()
+        fut.set_result("1")
+        await fut
+    asyncio.run(inner())
 
 
 setattr(builtins, "stop", stop)
