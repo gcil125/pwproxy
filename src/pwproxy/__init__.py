@@ -14,9 +14,8 @@ def stop():
 
     async def inner():
         loop = asyncio.get_running_loop()
-        fut = loop.create_future()
-        fut.set_result("1")
-        await fut
+        await loop.create_future()
+
     asyncio.run(inner())
 
 
