@@ -1,0 +1,28 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "gaochuang", email = "895091550@qq.com"},
+]
+dependencies = [
+    "playwright>=1.33.0",
+    "pandas>=2.0.1",
+    "nest-asyncio>=1.5.6",
+]
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.build]
+package-dir = "src"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.3.1",
+]
