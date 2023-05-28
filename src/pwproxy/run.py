@@ -15,7 +15,7 @@ class Base:
     @abstractmethod
     def run(cls, script: str | Path, url, browser: Literal["chromium", "firefox", "webkit"], channel=None):
         driver = sync_playwright().start()
-        br: Browser = getattr(driver, browser).launch(headless=False, args=["--start-maximized"], channel=channel)
+        br: Browser = getattr(driver, browser).launch(headless=True, args=["--start-maximized"], channel=channel)
         page: Page = br.new_page(no_viewport=True)
         page.route("**/*", cls.handler)
         if url:
