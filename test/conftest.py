@@ -1,21 +1,27 @@
 import asyncio
-import builtins
 
+from playwright._impl._impl_to_api_mapping import ImplToApiMapping
+from playwright.sync_api import Page
 import pytest
 
 
 @pytest.fixture(autouse=True)
 def reset_stop():
-    def _stop():
-        import nest_asyncio
-        nest_asyncio.apply()
+    mapping = ImplToApiMapping()
 
-        async def inner():
-            loop = asyncio.get_running_loop()
-            fut = loop.create_future()
-            fut.set_result("1")
-            await fut
+    def stop(self):
+        async def pause() -> None:
+            async def a():
+                await asyncio.sleep(1)
 
-        asyncio.run(inner())
+            await asyncio.wait(
+                [
+                    asyncio.create_task(a()),
+                    self._impl_obj._closed_or_crashed_future,
+                ],
+                return_when=asyncio.FIRST_COMPLETED,
+            )
 
-    setattr(builtins, "stop", _stop)
+        return mapping.from_maybe_impl(self._sync(pause()))
+
+    setattr(Page, "stop", stop)

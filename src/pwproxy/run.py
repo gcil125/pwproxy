@@ -20,7 +20,7 @@ class Base:
         page.route("**/*", cls.handler)
         if url:
             page.goto(url)
-        stop()
+        page.stop()
 
         return page
 
