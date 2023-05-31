@@ -39,8 +39,7 @@ class Run(Base):
         if not path.exists():
             raise FileNotFoundError(f"{str(path)!r} 文件不存在")
         cls.path = path
-        page = super().run(path, url, browser, channel)
-        return page
+        return super().run(path, url, browser, channel)
 
     @classmethod
     def handler(cls, route: Route):
@@ -57,8 +56,6 @@ class Run(Base):
                 route.continue_()
                 try:
                     reload(runner)
-                except ModuleNotFoundError:
-                    ...
                 except ImportError:
                     ...
         except Error:
