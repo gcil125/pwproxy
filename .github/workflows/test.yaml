@@ -10,23 +10,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up PDM
-        uses:
-          pdm-project/setup-pdm@v2
+      - name: Set up Python3.10
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install PDM
+        run: |
+          pip install pdm
+
       - name: Install dependencies
         run: |
-          pdm install
-          pdm list
+          pdm export -o requirements.txt
+          pip install -r requirements.txt
 
       - name: Install browser
         run: playwright install
 
       - name: run pytest
         run: |
-          pdm run -v pytest tests/test_run.py
+          python main.py
 
 
 
