@@ -21,9 +21,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pdm export --without-hashes -o requirements.txt 
           pip install -r requirements.txt
-          pdm add .
+          pip install .
 
       - name: Install browser
         run: playwright install
