@@ -17,7 +17,7 @@ def reset_stop():
             await asyncio.wait(
                 [
                     asyncio.create_task(a()),
-                    self._impl_obj._closed_or_crashed_future,
+                    asyncio.Future()
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
             )

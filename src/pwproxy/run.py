@@ -13,9 +13,10 @@ class Base:
 
     @classmethod
     @abstractmethod
-    def run(cls, script: str | Path, url, browser: Literal["chromium", "firefox", "webkit"], channel=None):
+    def run(cls, script: str | Path, url, browser: Literal["chromium", "firefox", "webkit"], channel=None,
+            headless=False):
         driver = sync_playwright().start()
-        br: Browser = getattr(driver, browser).launch(headless=True, args=["--start-maximized"], channel=channel)
+        br: Browser = getattr(driver, browser).launch(headless=headless, args=["--start-maximized"], channel=channel)
         page: Page = br.new_page(no_viewport=True)
         page.route("**/*", cls.handler)
         if url:
@@ -34,12 +35,12 @@ class Run(Base):
     path = None
 
     @classmethod
-    def run(cls, script: str | Path, url=None, browser="chromium", channel="chrome"):
+    def run(cls, script: str | Path, url=None, browser="chromium", channel="chrome", headless=False):
         path = Path(script) if isinstance(script, str) else script
         if not path.exists():
             raise FileNotFoundError(f"{str(path)!r} 文件不存在")
         cls.path = path
-        return super().run(path, url, browser, channel)
+        return super().run(path, url, browser, channel, headless)
 
     @classmethod
     def handler(cls, route: Route):

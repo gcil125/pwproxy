@@ -1,4 +1,6 @@
 from pathlib import Path
+import subprocess
+
 import pytest
 
 from src.pwproxy.run import Run
@@ -24,5 +26,33 @@ addons = [
 ] 
     """)
 
-    page = Run.run(path, url="http://example.com/")
+    page = Run.run(path, url="http://example.com/", headless=True)
     assert "Goodo" == page.inner_text("h1")
+
+
+def test_main(pytester: pytest.Pytester, tmp_path: Path):
+    path = pytester.makepyfile("""
+from playwright.sync_api import Route
+
+def replace_resp(route: Route):
+    if "http://example.com/" in route.request.url:
+        response = route.fetch()
+        body = response.text()
+        body = body.replace("Example Domain", "Goodo")
+        route.fulfill(
+            body=body
+        )
+
+addons = [
+    replace_resp
+] 
+    """)
+    subprocess.run([
+        "pwp", "-s", path,
+        "--url", "http://example.com/",
+        "--headless"
+    ])
+    page = Run.run(path, url="http://example.com/", headless=True)
+    assert "Goodo" == page.inner_text("h1")
+
+    assert False
