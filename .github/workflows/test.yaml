@@ -19,6 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           pdm install
+          pdm list
 
       - name: Install browser
         run: playwright install
