@@ -19,8 +19,8 @@ jobs:
         run: |
           pdm add .
 
-#      - name: Install browser
-#        run: playwright install
+      - name: Install browser
+        run: python -m playwright install
 
       - name: run pytest
         run: |
