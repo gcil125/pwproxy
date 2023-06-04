@@ -20,7 +20,7 @@ jobs:
           pdm add .
 
       - name: Install browser
-        run: python -m playwright install --with-deps
+        run: playwright install --with-deps
 
       - name: run pytest
         run: |
