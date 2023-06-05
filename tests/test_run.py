@@ -30,7 +30,7 @@ addons = [
     assert "Goodo" == page.inner_text("h1")
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_main(pytester: pytest.Pytester, tmp_path: Path):
     path = pytester.makepyfile("""
 from playwright.sync_api import Route
