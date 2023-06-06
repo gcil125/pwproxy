@@ -1,9 +1,8 @@
 from pathlib import Path
-import subprocess
 
 import pytest
 
-from src.pwproxy.run import Run
+from pwproxy.run import Run
 
 pytest_plugins = "pytester"
 

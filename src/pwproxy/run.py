@@ -9,7 +9,7 @@ from importlib import reload
 
 
 class Base:
-    _page = None
+    # _page = None
 
     @classmethod
     @abstractmethod
