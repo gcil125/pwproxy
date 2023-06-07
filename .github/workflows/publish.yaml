@@ -25,8 +25,6 @@ jobs:
         run: pdm build
 
       - name: Publish distribution to PyPI
-#        if: startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI }}
-#          repository-url: https://pypi.org/legacy/
