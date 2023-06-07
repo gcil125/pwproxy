@@ -1,7 +1,7 @@
 [project]
 name = "pwproxy"
-version = "1.1.1"
-description = ""
+version = "1.1.2"
+description = "Implement the core functions of mitmproxy based on playwright: request interception, response tampering"
 authors = [
     { name = "gaochuang", email = "895091550@qq.com" },
 ]
@@ -12,7 +12,7 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 license = { text = "MIT" }
-
+readme = "README.md"
 
 [build-system]
 requires = ["pdm-backend"]
